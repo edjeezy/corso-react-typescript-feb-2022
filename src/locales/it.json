@@ -1,0 +1,10 @@
+{
+  "MainLayout.Trips": "Viaggi",
+  "MainLayout.TripDetails": "Dettagli Viaggio",
+  "Trips.QueryLoading": "Caricamento...",
+  "Trips.QueryError": "Errore durante la richiesta dei viaggi!!",
+  "TripDetails.QueryError": "Errore durante la richiesta del viaggio con id: {{tripId}}!!",
+  "TripDetails.QueryLoading": "Caricamento...",
+  "TripDetails.From": "Da 🛫 ",
+  "TripDetails.To": "A 🛬 "
+}

@@ -7,6 +7,7 @@ type Props = models.Trip;
 
 export function Trip(props: Props) {
   const navigate = useNavigate();
+
   return (
     <div
       className={styles.trip}

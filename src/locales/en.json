@@ -1,0 +1,10 @@
+{
+  "MainLayout.Trips": "Trips",
+  "MainLayout.TripDetails": "Trip Details",
+  "Trips.QueryLoading": "Loading...",
+  "Trips.QueryError": "Error while fetching trips!!",
+  "TripDetails.QueryError": "Error while fetching trip with id: {{tripId}}!!",
+  "TripDetails.QueryLoading": "Loading...",
+  "TripDetails.From": "From 🛫 ",
+  "TripDetails.To": "To 🛬 "
+}
