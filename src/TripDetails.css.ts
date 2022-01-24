@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { style, globalStyle } from "@vanilla-extract/css";
 
 export const tripDetails = style({
   display: "flex",
@@ -24,4 +24,18 @@ export const to = style({
   padding: "8px",
   borderRadius: "4px",
   minWidth: "400px",
+});
+
+export const del = style({
+  display: "flex",
+  flexDirection: "row",
+  marginTop: "8px",
+  paddingTop: "8px",
+  minWidth: "400px",
+  justifyContent: "flex-end",
+  borderTop: "1px solid lightgray",
+});
+
+globalStyle(`${del} > button`, {
+  cursor: "pointer",
 });

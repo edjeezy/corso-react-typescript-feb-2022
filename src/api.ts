@@ -15,6 +15,12 @@ const get = (path: string) =>
     .then((res) => res.json())
     .then((res) => res.records.map((r: { fields: unknown[] }) => r.fields));
 
+const del = (path: string, id: string) =>
+  fetch(`${baseUrl}${path}?records[]=${id}`, {
+    method: "DELETE",
+    headers: authenticationHeader,
+  }).then(() => {});
+
 export const getTrips = async (): Promise<Trip[]> => {
   const response = await get("/Trips");
   await delay(2000);
@@ -27,6 +33,11 @@ export const getTrip = async (id: Trip["id"]): Promise<Trip> => {
     trips.find((t) => t.id === id) ||
     Promise.reject(new Error("Trip not found."))
   );
+};
+
+export const deleteTrip = async (id: Trip["id"]): Promise<void> => {
+  await delay(2000);
+  return del("/Trips", id);
 };
 
 async function delay(ms: number): Promise<void> {
