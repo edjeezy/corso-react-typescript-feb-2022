@@ -21,6 +21,14 @@ export const getTrips = async (): Promise<Trip[]> => {
   return decodeOrThrow(t.array(Trip), response);
 };
 
+export const getTrip = async (id: Trip["id"]): Promise<Trip> => {
+  const trips = await getTrips();
+  return (
+    trips.find((t) => t.id === id) ||
+    Promise.reject(new Error("Trip not found."))
+  );
+};
+
 async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
