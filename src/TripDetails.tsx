@@ -3,9 +3,10 @@ import { getTrip } from "./api";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { matchQuery } from "./util/matchQuery";
+import * as routes from "./routes";
 
 export function TripDetails() {
-  const params = useParams<"tripId">();
+  const params = useParams<keyof routes.TripParams>();
   const tripId = params.tripId!;
 
   const tripQuery = useQuery(["trip", tripId], () => getTrip(tripId));
