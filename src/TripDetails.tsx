@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import { matchQuery } from "./util/matchQuery";
 import * as routes from "./routes";
 import { useTranslation } from "react-i18next";
+import { useFormatDate } from "./locales/i18n";
 
 export function TripDetails() {
   const params = useParams<keyof routes.TripParams>();
@@ -13,6 +14,7 @@ export function TripDetails() {
   const tripQuery = useQuery(["trip", tripId], () => getTrip(tripId));
 
   const { t } = useTranslation();
+  const formatDate = useFormatDate();
 
   return (
     <div className={styles.tripDetails}>
@@ -24,12 +26,12 @@ export function TripDetails() {
             <div className={styles.from}>
               <span>{t("TripDetails.From")}</span>
               <span>{trip.origin}</span>
-              <span>{trip.startDate.toDateString()}</span>
+              <span>{formatDate(trip.startDate)}</span>
             </div>
             <div className={styles.to}>
               <span>{t("TripDetails.To")}</span>
               <span>{trip.destination}</span>
-              <span>{trip.endDate.toDateString()}</span>
+              <span>{formatDate(trip.endDate)}</span>
             </div>
           </>
         ),
