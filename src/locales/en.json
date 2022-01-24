@@ -8,6 +8,5 @@
   "TripDetails.From": "From 🛫 ",
   "TripDetails.To": "To 🛬 ",
   "TripDetails.Delete": "Delete",
-  "TripDetails.DeleteError": "Error while deleting ❌",
-  "TripDetails.DeleteLoading": "Delete ⌛"
+  "TripDetails.DeleteError": "Error while deleting"
 }

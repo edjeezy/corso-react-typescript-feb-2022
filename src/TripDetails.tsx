@@ -7,6 +7,7 @@ import { matchMutation } from "./util/matchMutation";
 import * as routes from "./routes";
 import { useTranslation } from "react-i18next";
 import { useFormatDate } from "./locales/i18n";
+import { Button } from "./Button";
 
 export function TripDetails() {
   const params = useParams<keyof routes.TripParams>();
@@ -44,18 +45,18 @@ export function TripDetails() {
               <span>{formatDate(trip.endDate)}</span>
             </div>
             <div className={styles.del}>
-              <button
+              <Button
                 onClick={() => {
                   deleteTripMutation.mutate(tripId);
                 }}
-              >
-                {matchMutation(deleteTripMutation, {
+                status={deleteTripMutation.status}
+                content={matchMutation(deleteTripMutation, {
                   idle: () => t("TripDetails.Delete"),
                   success: () => "", // This never happens because of redirect to /trips
                   error: () => t("TripDetails.DeleteError"),
-                  loading: () => t("TripDetails.DeleteLoading"),
+                  loading: () => t("TripDetails.Delete"),
                 })}
-              </button>
+              />
             </div>
           </>
         ),
