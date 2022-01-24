@@ -1,4 +1,5 @@
-import { style, globalStyle } from "@vanilla-extract/css";
+import { style, globalStyle, styleVariants } from "@vanilla-extract/css";
+import { TripStatus } from "./models";
 
 export const tripDetails = style({
   display: "flex",
@@ -6,7 +7,7 @@ export const tripDetails = style({
   alignItems: "center",
 });
 
-export const from = style({
+export const baseBox = style({
   display: "flex",
   flexDirection: "column",
   marginTop: "8px",
@@ -16,17 +17,13 @@ export const from = style({
   minWidth: "400px",
 });
 
-export const to = style({
-  display: "flex",
-  flexDirection: "column",
-  marginTop: "8px",
-  backgroundColor: "lightgray",
-  padding: "8px",
-  borderRadius: "4px",
-  minWidth: "400px",
+export const tripBox: Record<TripStatus, string> = styleVariants({
+  Requested: [baseBox, { background: "lightgrey" }],
+  Booked: [baseBox, { background: "lightgreen" }],
+  CheckedIn: [baseBox, { background: "orange" }],
 });
 
-export const del = style({
+export const footer = style({
   display: "flex",
   flexDirection: "row",
   marginTop: "8px",
@@ -36,6 +33,10 @@ export const del = style({
   borderTop: "1px solid lightgray",
 });
 
-globalStyle(`${del} > button`, {
+globalStyle(`${footer} > button`, {
   cursor: "pointer",
+});
+
+globalStyle(`${footer} > *`, {
+  marginLeft: "16px",
 });

@@ -1,6 +1,7 @@
-import { style } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
+import { TripStatus } from "./models";
 
-export const trip = style({
+export const baseTrip = style({
   display: "flex",
   backgroundColor: "lightgray",
   alignItems: "center",
@@ -17,4 +18,10 @@ export const trip = style({
   },
   padding: "0 8px",
   borderRadius: "4px",
+});
+
+export const trip: Record<TripStatus, string> = styleVariants({
+  Requested: [baseTrip, { background: "lightgrey" }],
+  Booked: [baseTrip, { background: "lightgreen" }],
+  CheckedIn: [baseTrip, { background: "orange" }],
 });

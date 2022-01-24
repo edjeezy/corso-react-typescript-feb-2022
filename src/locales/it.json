@@ -8,5 +8,10 @@
   "TripDetails.From": "Da 🛫 ",
   "TripDetails.To": "A 🛬 ",
   "TripDetails.Delete": "Elimina",
-  "TripDetails.DeleteError": "Errore durante l'eliminazione"
+  "TripDetails.DeleteError": "Errore durante l'eliminazione",
+  "TripDetails.UpdateStatusLoading": "Aggiornamento in corso...",
+  "TripDetails.UpdateStatusError": "Errore durante la modifica dello status",
+  "TripStatus.Requested": "Richiesto",
+  "TripStatus.Booked": "Prenotato",
+  "TripStatus.CheckedIn": "Check-in effettuato"
 }

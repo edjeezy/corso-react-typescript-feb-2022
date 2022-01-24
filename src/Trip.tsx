@@ -13,7 +13,7 @@ export function Trip(props: Props) {
 
   return (
     <div
-      className={styles.trip}
+      className={styles.trip[props.status]}
       onClick={() => navigate(routes.trip({ tripId: String(props.id) }))}
     >
       <span>{`${props.origin} -> ${props.destination}`}</span>

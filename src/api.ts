@@ -1,4 +1,4 @@
-import { Trip } from "./models";
+import { Trip, TripStatus } from "./models";
 import * as t from "io-ts";
 import { PathReporter } from "io-ts/PathReporter";
 import { either } from "fp-ts";
@@ -21,6 +21,17 @@ const del = (path: string, id: string) =>
     headers: authenticationHeader,
   }).then(() => {});
 
+const update = <A>(path: string, id: string, newFields: Partial<A>) => {
+  return fetch(`${baseUrl}${path}`, {
+    method: "PATCH",
+    headers: {
+      ...authenticationHeader,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({ records: [{ id, fields: newFields }] }),
+  }).then(() => {});
+};
+
 export const getTrips = async (): Promise<Trip[]> => {
   const response = await get("/Trips");
   await delay(2000);
@@ -38,6 +49,13 @@ export const getTrip = async (id: Trip["id"]): Promise<Trip> => {
 export const deleteTrip = async (id: Trip["id"]): Promise<void> => {
   await delay(2000);
   return del("/Trips", id);
+};
+
+export const updateTripStatus = async (patch: {
+  id: Trip["id"];
+  newStatus: TripStatus;
+}) => {
+  return update<Trip>("/Trips", patch.id, { status: patch.newStatus });
 };
 
 async function delay(ms: number): Promise<void> {
