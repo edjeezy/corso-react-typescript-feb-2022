@@ -11,6 +11,7 @@
   "TripDetails.DeleteError": "Error while deleting",
   "TripDetails.UpdateStatusLoading": "Loading...",
   "TripDetails.UpdateStatusError": "Error while updating status",
+  "TripDetails.ConfirmDeleteTrip": "You are about to delete the trip {{tripName}}. Are you sure?",
   "TripStatus.Requested": "Requested",
   "TripStatus.Booked": "Booked",
   "TripStatus.CheckedIn": "Checked-in"

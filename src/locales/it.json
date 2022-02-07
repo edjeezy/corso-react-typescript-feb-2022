@@ -11,6 +11,7 @@
   "TripDetails.DeleteError": "Errore durante l'eliminazione",
   "TripDetails.UpdateStatusLoading": "Aggiornamento in corso...",
   "TripDetails.UpdateStatusError": "Errore durante la modifica dello status",
+  "TripDetails.ConfirmDeleteTrip": "Stai per eliminare il viaggio {{tripName}}. Sei sicuro?",
   "TripStatus.Requested": "Richiesto",
   "TripStatus.Booked": "Prenotato",
   "TripStatus.CheckedIn": "Check-in effettuato"

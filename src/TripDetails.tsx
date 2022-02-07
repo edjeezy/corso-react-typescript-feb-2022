@@ -9,8 +9,23 @@ import { useTranslation } from "react-i18next";
 import { useFormatDate } from "./locales/i18n";
 import { Button } from "./Button";
 import { Trip, TripStatus } from "./models";
+import { useState } from "react";
+import { matchRender } from "./util/matchRender";
+
+type ConfirmDialogState =
+  | {
+      status: "closed";
+    }
+  | {
+      status: "open";
+      message: string;
+      onConfirm: () => void;
+    };
 
 export function TripDetails() {
+  const [confirmDialogState, updateConfirmDialogState] =
+    useState<ConfirmDialogState>({ status: "closed" });
+
   const params = useParams<keyof routes.TripParams>();
 
   const tripId = params.tripId!;
@@ -79,9 +94,15 @@ export function TripDetails() {
               })}
               <Button
                 onClick={() => {
-                  deleteTripMutation.mutate(tripId);
+                  updateConfirmDialogState({
+                    status: "open",
+                    message: t("TripDetails.ConfirmDeleteTrip", {
+                      tripName: `"${trip.origin} - ${trip.destination}"`,
+                    }),
+                    onConfirm: () => deleteTripMutation.mutate(tripId),
+                  });
                 }}
-                status={deleteTripMutation.status}
+                status="idle"
                 content={matchMutation(deleteTripMutation, {
                   idle: () => t("TripDetails.Delete"),
                   success: () => "", // This never happens because of redirect to /trips
@@ -89,6 +110,40 @@ export function TripDetails() {
                   loading: () => t("TripDetails.Delete"),
                 })}
               />
+            </div>
+
+            <div className={styles.dialogOverlay[confirmDialogState.status]}>
+              {matchRender<
+                ConfirmDialogState,
+                ConfirmDialogState["status"],
+                "status"
+              >(confirmDialogState, confirmDialogState.status, {
+                closed: () => null,
+                open: (value) => (
+                  <div className={styles.dialog}>
+                    <h4>{value.message}</h4>
+
+                    <div className={styles.dialogActions}>
+                      <Button
+                        content="Cancel"
+                        status="idle"
+                        onClick={() =>
+                          updateConfirmDialogState({ status: "closed" })
+                        }
+                      />
+
+                      {/* separator */}
+                      <div style={{ width: 16 }} />
+
+                      <Button
+                        content="Confirm"
+                        status={deleteTripMutation.status}
+                        onClick={value.onConfirm}
+                      />
+                    </div>
+                  </div>
+                ),
+              })}
             </div>
           </>
         ),
