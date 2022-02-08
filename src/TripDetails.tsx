@@ -9,9 +9,19 @@ import { useTranslation } from "react-i18next";
 import { useFormatDate } from "./locales/i18n";
 import { Button } from "./Button";
 import { Trip, TripStatus } from "./models";
+import { useState } from "react";
+
+type State =
+  | {
+      state: "ready";
+    }
+  | {
+      state: "confirmDelete";
+    };
 
 export function TripDetails() {
   const params = useParams<keyof routes.TripParams>();
+  const [state, updateState] = useState<State>({ state: "ready" });
 
   const tripId = params.tripId!;
   const tripQuery = useQuery(["trip", tripId], () => getTrip(tripId));
@@ -50,6 +60,41 @@ export function TripDetails() {
     </select>
   );
 
+  const renderDelete = (): React.ReactNode => {
+    switch (state.state) {
+      case "ready":
+        return (
+          <Button
+            onClick={() => updateState({ state: "confirmDelete" })}
+            status="idle"
+            content={t("TripDetails.Delete")}
+          />
+        );
+      case "confirmDelete":
+        return (
+          <>
+            <span>{t("TripDetails.DeleteConfirmMessage")}</span>
+            <Button
+              onClick={() => updateState({ state: "ready" })}
+              status="idle"
+              content={t("TripDetails.DeleteCancel")}
+            />
+            <Button
+              onClick={() => {
+                deleteTripMutation.mutate(tripId);
+              }}
+              status={deleteTripMutation.status}
+              content={matchMutation(deleteTripMutation, {
+                idle: () => t("TripDetails.DeleteConfirm"),
+                success: () => "", // This never happens because of redirect to /trips
+                error: () => t("TripDetails.DeleteError"),
+                loading: () => t("TripDetails.Delete"),
+              })}
+            />
+          </>
+        );
+    }
+  };
   return (
     <div className={styles.tripDetails}>
       {matchQuery(tripQuery, {
@@ -68,27 +113,17 @@ export function TripDetails() {
               <span>{formatDate(trip.endDate)}</span>
             </div>
             <div className={styles.footer}>
-              {matchMutation(updateTripStatusMutation, {
-                idle: () => renderStatusSelect(trip),
-                success: () =>
-                  isFetching
-                    ? t("TripDetails.UpdateStatusLoading")
-                    : renderStatusSelect(trip),
-                error: () => renderStatusSelect(trip),
-                loading: () => t("TripDetails.UpdateStatusLoading"),
-              })}
-              <Button
-                onClick={() => {
-                  deleteTripMutation.mutate(tripId);
-                }}
-                status={deleteTripMutation.status}
-                content={matchMutation(deleteTripMutation, {
-                  idle: () => t("TripDetails.Delete"),
-                  success: () => "", // This never happens because of redirect to /trips
-                  error: () => t("TripDetails.DeleteError"),
-                  loading: () => t("TripDetails.Delete"),
+              {state.state === "ready" &&
+                matchMutation(updateTripStatusMutation, {
+                  idle: () => renderStatusSelect(trip),
+                  success: () =>
+                    isFetching
+                      ? t("TripDetails.UpdateStatusLoading")
+                      : renderStatusSelect(trip),
+                  error: () => renderStatusSelect(trip),
+                  loading: () => t("TripDetails.UpdateStatusLoading"),
                 })}
-              />
+              {renderDelete()}
             </div>
           </>
         ),
