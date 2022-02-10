@@ -2,7 +2,7 @@ import * as styles from "./MainLayout.css";
 import { Outlet } from "react-router-dom";
 import { useMatch } from "react-router";
 import * as routes from "./routes";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "./locales/i18n";
 
 export function MainLayout() {
   const isTripView = useMatch(routes.trip.pattern);

@@ -5,10 +5,10 @@ import { useParams, useNavigate } from "react-router";
 import { matchQuery } from "./util/matchQuery";
 import { matchMutation } from "./util/matchMutation";
 import * as routes from "./routes";
-import { useTranslation } from "react-i18next";
-import { useFormatDate } from "./locales/i18n";
+import { isoTranslate, useFormatDate, useTranslation } from "./locales/i18n";
 import { Button } from "./Button";
 import { Trip, TripStatus } from "./models";
+import { Span } from "./designSystem/Span";
 
 export function TripDetails() {
   const params = useParams<keyof routes.TripParams>();
@@ -58,14 +58,14 @@ export function TripDetails() {
         success: (trip, isFetching) => (
           <>
             <div className={styles.tripBox[trip.status]}>
-              <span>{t("TripDetails.From")}</span>
-              <span>{trip.origin}</span>
-              <span>{formatDate(trip.startDate)}</span>
+              <Span>{t("TripDetails.From")}</Span>
+              <Span>{isoTranslate(trip.origin)}</Span>
+              <Span>{formatDate(trip.startDate)}</Span>
             </div>
             <div className={styles.tripBox[trip.status]}>
-              <span>{t("TripDetails.To")}</span>
-              <span>{trip.destination}</span>
-              <span>{formatDate(trip.endDate)}</span>
+              <Span>{t("TripDetails.To")}</Span>
+              <Span>{isoTranslate(trip.destination)}</Span>
+              <Span>{formatDate(trip.endDate)}</Span>
             </div>
             <div className={styles.footer}>
               {matchMutation(updateTripStatusMutation, {
